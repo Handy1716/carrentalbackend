@@ -1,30 +1,34 @@
-import { Column, Entity, PrimaryGeneratedColumn, Timestamp } from "typeorm";
+import { Rental } from "src/rentals/entities/rental.entity";
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, Timestamp, UpdateDateColumn } from "typeorm";
 
 @Entity('cars')
 export class Car {
 
     @PrimaryGeneratedColumn()
-    id: number
+    id: number;
 
-    @Column()
+    @Column({
+        type: "varchar",
+        length: 20,
+    })
     license_plate_number: string;
 
     @Column()
-    brand: string
+    brand: string;
 
     @Column()
-    model: string
+    model: string;
 
     @Column()
     daily_cost: number;
 
-    @Column()
-    created_at: string;
+    @CreateDateColumn()
+    created_at: Date;
 
-    @Column()
-    updated_at: string;
-
-
-
+    @UpdateDateColumn()
+    updated_at: Date;
+    
+    @OneToMany(() => Rental, (rental) => rental.car)
+    rentals: Rental;
 
 }
